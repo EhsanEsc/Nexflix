@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {{template "__head.html" .Title}}
+    </head>
+    <body>
+        {{template "__header.html"}}
+
+        <br>
+        <div class="mui--text-display3" style="text-align:center;">
+            NetFlip Films Page!
+        </div>
+        <center>
+        <br><br>
+        <br>
+        <form action="/films" method="get">
+            <p> Filter films by score </p>
+            <input name="film_score" type="text" placeholder="Write score..."/>
+            <button type="submit"> Filter! </button>
+        </form><br><br><br>
+
+        <div class="mui--text-display1">All films!</div>
+        <table class="mui-table mui-table--bordered" style="width:70%;">
+            <thead><tr>
+                {{range .PropertiesNames}}
+                    <th>{{.}}</th>
+                {{end}}
+            </tr></thead>
+            <tbody>
+                {{ $Filtered_Film_score_local := .Filtered_Film_score}}
+                {{range .Films}}
+                {{if eq $Filtered_Film_score_local .Score 0}}
+                <tr>
+                    <td><a href="/showfilm?film_id={{.ID}}">{{.Name}}</a></td>
+                    {{range .PropertiesValues}}
+                        <td>
+                            {{.}}
+                        </td>
+                    {{end}}
+                </tr>
+                {{end}}
+                {{end}}
+            </tbody>
+        </table>
+        <br><br>
+
+        <a href="/addfilm">
+            <button class="mui-btn mui-btn--danger">Add new film</button>
+        </a>
+        </center>
+    </body>
+</html>

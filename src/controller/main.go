@@ -13,6 +13,10 @@ func Register(tps *template.Template) {
 	hc.template = tps.Lookup("home.html")
 	http.HandleFunc("/home", hc.get)
 
+	fc := new(filmsController)
+	fc.template = tps.Lookup("films.html")
+	http.HandleFunc("/films", fc.get)
+
 	// Use serveResource when using another mux
 	// http.HandleFunc("/css/", serveResource)
 	http.Handle("/css/", http.FileServer(http.Dir("resources")))
